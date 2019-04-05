@@ -3,6 +3,8 @@
 namespace Yab\FlightDeck;
 
 use Illuminate\Support\ServiceProvider;
+use Yab\FlightDeck\Commands\GenerateToken;
+use Yab\FlightDeck\Http\Middleware\Authorization;
 
 class FlightDeckServiceProvider extends ServiceProvider
 {
@@ -17,6 +19,7 @@ class FlightDeckServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'flightdeck');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadRoutesFrom(__DIR__.'/routes.php');
+        $this->app['router']->aliasMiddleware('flightdeck', Authorization::class);
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -37,5 +40,9 @@ class FlightDeckServiceProvider extends ServiceProvider
     {
         // Automatically apply the package configuration
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'flightdeck');
+
+        $this->commands([
+            GenerateToken::class,
+        ]);
     }
 }

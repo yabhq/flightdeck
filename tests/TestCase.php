@@ -20,7 +20,7 @@ class TestCase extends OrchestraTestCase
 
         $this->withFactories(__DIR__ . '/../src/database/factories');
 
-        $this->loadLaravelMigrations();
+        $this->loadMigrationsFrom(__DIR__ . '/../src/database/migrations');
 
         Artisan::call('migrate', [
             '--database' => 'testbench',
@@ -29,7 +29,7 @@ class TestCase extends OrchestraTestCase
 
     /**
      * Get the package providers array.
-     * 
+     *
      * @param  \Illuminate\Foundation\Application  $app
      * @return array
      */
@@ -58,4 +58,3 @@ class TestCase extends OrchestraTestCase
         $app['config']->set('auth.providers.users.model', User::class);
     }
 }
-
