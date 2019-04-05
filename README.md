@@ -16,8 +16,14 @@ composer require yabhq/flightdeck
 
 ## Usage
 
+Generate new API key for authorization
 ``` php
-php artisan vendor:publish
+php artisan flightdeck:generate app1
+```
+
+List all available API keys
+``` php
+php artisan flightdeck:list
 ```
 
 ### Testing
@@ -36,11 +42,12 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ### Security
 
-If you discover any security related issues, please email chris@yabhq.com instead of using the issue tracker.
+If you discover any security related issues, please email us instead of using the issue tracker.
 
 ## Credits
 
-- [Chris Blackwell](https://github.com/yabhq)
+- [Chris Blackwell](https://github.com/chrisblackwell)
+- [Jim Hlad](https://github.com/jimhlad)
 - [All Contributors](../../contributors)
 
 ## License

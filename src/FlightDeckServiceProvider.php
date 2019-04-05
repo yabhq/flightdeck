@@ -2,6 +2,7 @@
 
 namespace Yab\FlightDeck;
 
+use Yab\FlightDeck\Commands\ListTokens;
 use Illuminate\Support\ServiceProvider;
 use Yab\FlightDeck\Commands\GenerateToken;
 use Yab\FlightDeck\Http\Middleware\Authorization;
@@ -47,6 +48,7 @@ class FlightDeckServiceProvider extends ServiceProvider
 
         $this->commands([
             GenerateToken::class,
+            ListTokens::class,
         ]);
     }
 }

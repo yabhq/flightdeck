@@ -14,6 +14,7 @@ class CreateApiTokensTable extends Migration
     public function up()
     {
         Schema::create('api_tokens', function (Blueprint $table) {
+            $table->string('name');
             $table->string('token', 60)->unique()->nullable()->default(null);
             $table->timestamp('expires_at')->default(
                 now()->addDays(config('flightdeck.tokens.expire_days'))->toDateTimeString()
