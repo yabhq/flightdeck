@@ -9,14 +9,16 @@ class FlightDeck
     /**
      * Generate an authorization token
      *
+     * @param string $name
      * @param string $expires_at
      * @param integer $length
      * @return string
      */
-    public static function generate(string $expires_at = null, int $length = 60) : string
+    public static function generate(string $name, string $expires_at = null, int $length = 60) : string
     {
         $token = str_random($length);
         DB::table('api_tokens')->insert([
+            'name' => $name,
             'token' => $token,
             'expires_at' => $expires_at ?? now()->addDays(config('flightdeck.tokens.expire_days')),
         ]);

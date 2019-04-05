@@ -6,7 +6,7 @@ use Illuminate\Http\Response;
 use Yab\FlightDeck\Models\User;
 use Yab\FlightDeck\Tests\TestCase;
 
-class ProfileRetrievalTest extends TestCase
+class UserRetrievalTest extends TestCase
 {
     /** @test */
     public function an_authorized_user_can_retrieve_their_profile()
@@ -19,10 +19,10 @@ class ProfileRetrievalTest extends TestCase
         
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJson([
-        	'data' => [
-        		'name' => $user->name,
-        		'email' => $user->email,
-        	]
+            'data' => [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
         ]);
     }
 
@@ -34,4 +34,3 @@ class ProfileRetrievalTest extends TestCase
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 }
-
