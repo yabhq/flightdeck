@@ -16,7 +16,7 @@ composer require yabhq/flightdeck
 ## Usage
 
 ``` php
-// Usage description here
+php artisan vendor:publish
 ```
 
 ### Testing
