@@ -2,6 +2,7 @@
 
 namespace Yab\FlightDeck\Tests;
 
+use Yab\FlightDeck\Models\User;
 use Illuminate\Support\Facades\Artisan;
 use Yab\FlightDeck\FlightDeckServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
@@ -54,6 +55,7 @@ class TestCase extends OrchestraTestCase
             'database' => ':memory:',
             'prefix'   => '',
         ]);
+        $app['config']->set('auth.providers.users.model', User::class);
     }
 }
 
