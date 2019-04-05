@@ -1,0 +1,13 @@
+######################
+# OS generated files #
+######################
+.DS_Store*
+Thumbs.db
+.idea
+.vscode
+
+build
+composer.lock
+docs
+vendor
+coverage
