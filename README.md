@@ -17,12 +17,12 @@ composer require yabhq/flightdeck
 ## Usage
 
 Generate new API key for authorization
-``` php
+```bash
 php artisan flightdeck:generate app1
 ```
 
 List all available API keys
-``` php
+```bash
 php artisan flightdeck:list
 ```
 
