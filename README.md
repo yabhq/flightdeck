@@ -1,6 +1,7 @@
 # FlightDeck - Level up your Laravel API
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/yabhq/flightdeck.svg?style=flat-square)](https://packagist.org/packages/yabhq/flightdeck)
+[![CircleCI](https://circleci.com/gh/yabhq/flightdeck.svg?style=svg)](https://circleci.com/gh/yabhq/flightdeck)
 [![Quality Score](https://img.shields.io/scrutinizer/g/yabhq/flightdeck.svg?style=flat-square)](https://scrutinizer-ci.com/g/yabhq/flightdeck)
 [![Total Downloads](https://img.shields.io/packagist/dt/yabhq/flightdeck.svg?style=flat-square)](https://packagist.org/packages/yabhq/flightdeck)
 
