@@ -26,8 +26,6 @@ class AuthenticationTest extends TestCase
     /** @test */
     public function user_cannot_authenticate_with_invalid_credentials()
     {
-        $this->withoutExceptionHandling();
-        
         $user = factory(User::class)->create(['password' => bcrypt('testing123')]);
         
         $response = $this->post(route('login'), [
