@@ -1,8 +1,9 @@
 <?php
 
-namespace Yab\FlightDeck\Controllers;
+namespace Yab\FlightDeck\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Yab\FlightDeck\Http\Resources\UserResource;
 
 class UsersController extends Controller
 {
@@ -13,12 +14,6 @@ class UsersController extends Controller
      */
     public function show()
     {
-        return response()->json([
-			'data' => [
-	    		'name' => auth()->user()->name,
-                'email' => auth()->user()->email,
-	    	]
-		]);
+        return new UserResource(auth()->user());
     }
-
 }

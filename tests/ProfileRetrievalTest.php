@@ -16,8 +16,9 @@ class ProfileRetrievalTest extends TestCase
         $this->actingAs($user);
 
         $response = $this->json('POST', '/me');
+        
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertJsonFragment([
+        $response->assertJson([
         	'data' => [
         		'name' => $user->name,
         		'email' => $user->email,
@@ -29,6 +30,7 @@ class ProfileRetrievalTest extends TestCase
     public function a_guest_cannot_retrieve_their_profile()
     {
         $response = $this->json('POST', '/me');
+
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 }
