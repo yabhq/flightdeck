@@ -25,7 +25,7 @@ Route::group([
 		/**
 		 * Token refresh and user identification routes
 		 */
-		Route::post('me', '\Yab\FlightDeck\Http\Controllers\UsersController@show')->name('me');
+		Route::get('me', '\Yab\FlightDeck\Http\Controllers\UsersController@show')->name('me');
 	});
 	
 });
