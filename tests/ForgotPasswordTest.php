@@ -16,6 +16,12 @@ class ForgotPasswordTest extends TestCase
         $response = $this->post(route('password.email'));
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        $response->assertJsonStructure([
+            'errors' => [
+                'email',
+            ]
+        ]);
     }
 
     /** @test */
@@ -29,7 +35,7 @@ class ForgotPasswordTest extends TestCase
             'email' => $user->email,
         ]);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         Notification::assertSentTo($user, ResetPassword::class);
     }
