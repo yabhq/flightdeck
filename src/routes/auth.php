@@ -1,13 +1,22 @@
 <?php
 
-Route::group(['middleware' => ['api']], function () {
+/**
+ * Getting ready for takeoff...
+ */
+Route::group(['middleware' => ['api'], 'namespace' => 'Yab\FlightDeck\Http\Controllers'], function () {
 
     /**
-     * Login route
+     * JWT token routes
      */
-    Route::post('login', '\Yab\FlightDeck\Http\Controllers\AuthController@store')->name('login');
-    Route::post('logout', '\Yab\FlightDeck\Http\Controllers\AuthController@destroy')->name('logout');
-    Route::post('refresh', '\Yab\FlightDeck\Http\Controllers\AuthController@update')->name('refresh');
+    Route::post('login', 'AuthController@store')->name('login');
+    Route::post('logout', 'AuthController@destroy')->name('logout');
+    Route::post('refresh', 'AuthController@update')->name('refresh');
+
+    /**
+     * Forgot password
+     */
+    Route::post('password/email', 'ForgotPasswordController@sendResetEmail')->name('password.email');
+    Route::post('password/reset', 'ResetPasswordController@reset')->name('password.reset');
 
     /**
      * Authenticated users
@@ -15,8 +24,8 @@ Route::group(['middleware' => ['api']], function () {
     Route::group(['middleware' => ['auth']], function () {
 
         /**
-         * Token refresh and user identification routes
+         * Users
          */
-        Route::post('me', '\Yab\FlightDeck\Http\Controllers\UsersController@show')->name('me');
+        Route::post('me', 'UsersController@show')->name('me');
     });
 });
