@@ -3,10 +3,10 @@
 namespace Yab\FlightDeck\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Validation\ValidationException;
 use Yab\FlightDeck\Http\Requests\ForgotPasswordRequest;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
@@ -43,7 +43,13 @@ class ForgotPasswordController extends Controller
      */
     public function sendResetEmail(ForgotPasswordRequest $request)
     {
-        
+        $response = $this->broker()->sendResetLink(
+            $request->only('email')
+        );
+
+        return $response == Password::RESET_LINK_SENT
+            ? $this->sendResetLinkResponse($request, $response)
+            : $this->sendResetLinkFailedResponse($request, $response);
     }
     
     /**
