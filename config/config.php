@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'auth' => [
+        'enabled' => true,
+    ],
     'tokens' => [
         'expire_days' => 30
     ],

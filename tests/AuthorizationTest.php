@@ -10,7 +10,7 @@ class AuthorizationTest extends TestCase
     /** @test */
     public function valid_authorization_token_allows_request()
     {
-        $token = FlightDeck::generate();
+        $token = FlightDeck::generate('app1');
         Route::get('authorization-test', function () {
             return response()->json([
                         'data' => 'this was a success',
@@ -42,7 +42,7 @@ class AuthorizationTest extends TestCase
     /** @test */
     public function expired_token_is_unauthorized()
     {
-        $token = FlightDeck::generate(now()->subDays(2)->toDateTimeString());
+        $token = FlightDeck::generate('app2', now()->subDays(2)->toDateTimeString());
         Route::get('authorization-test', function () {
             return response()->json([
                 'data' => 'this was a success',

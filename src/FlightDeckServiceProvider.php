@@ -2,6 +2,7 @@
 
 namespace Yab\FlightDeck;
 
+use Yab\FlightDeck\Commands\ListTokens;
 use Illuminate\Support\ServiceProvider;
 use Yab\FlightDeck\Commands\GenerateToken;
 use Yab\FlightDeck\Http\Middleware\Authorization;
@@ -18,7 +19,11 @@ class FlightDeckServiceProvider extends ServiceProvider
          */
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'flightdeck');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->loadRoutesFrom(__DIR__.'/routes.php');
+        
+        if (config('flightdeck.auth.enabled')) {
+            $this->loadRoutesFrom(__DIR__ . '/routes/auth.php');
+        }
+
         $this->app['router']->aliasMiddleware('flightdeck', Authorization::class);
 
         if ($this->app->runningInConsole()) {
@@ -43,6 +48,7 @@ class FlightDeckServiceProvider extends ServiceProvider
 
         $this->commands([
             GenerateToken::class,
+            ListTokens::class,
         ]);
     }
 }

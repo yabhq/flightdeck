@@ -12,7 +12,7 @@ class GenerateToken extends Command
      *
      * @var string
      */
-    protected $signature = 'flightdeck:generate {expires_at?}';
+    protected $signature = 'flightdeck:generate {name} {expires_at?}';
 
     /**
      * The console command description.
@@ -22,23 +22,13 @@ class GenerateToken extends Command
     protected $description = 'Generate a fresh API token for authorization requests';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return mixed
      */
     public function handle()
     {
-        $token = FlightDeck::generate($this->option('expires_at'));
+        $token = FlightDeck::generate($this->argument('name'), $this->argument('expires_at'));
         $this->info($token);
     }
 }
