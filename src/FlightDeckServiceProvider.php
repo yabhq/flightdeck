@@ -2,8 +2,9 @@
 
 namespace Yab\FlightDeck;
 
-use Yab\FlightDeck\Commands\ListTokens;
 use Illuminate\Support\ServiceProvider;
+use Yab\FlightDeck\Commands\ListTokens;
+use Yab\FlightDeck\Http\Middleware\Cors;
 use Yab\FlightDeck\Commands\GenerateToken;
 use Yab\FlightDeck\Http\Middleware\Authorization;
 
@@ -25,6 +26,7 @@ class FlightDeckServiceProvider extends ServiceProvider
         }
 
         $this->app['router']->aliasMiddleware('flightdeck', Authorization::class);
+        $this->app['router']->aliasMiddleware('cors', Cors::class);
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
