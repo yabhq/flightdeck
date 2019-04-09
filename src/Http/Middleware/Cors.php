@@ -17,7 +17,6 @@ class Cors
      */
     public function handle($request, Closure $next)
     {
-        var_dump("there");
         $content = $next($request);
 
         if (method_exists($content, 'header')) {
