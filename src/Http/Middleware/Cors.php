@@ -19,7 +19,7 @@ class Cors
     {
         $content = $next($request);
 
-        if (method_exists($content, 'header')) {
+        if (config('flightdeck.cors.enabled') && method_exists($content, 'header')) {
             return $content
                 ->header('Access-Control-Allow-Origin', '*')
                 ->header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
