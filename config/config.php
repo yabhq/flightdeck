@@ -2,13 +2,13 @@
 
 return [
     'auth' => [
-        'enabled' => env('FLIGHTDECK_AUTH_ENABLED', true)
+        'enabled' => true
     ],
     'tokens' => [
         'expire_days' => 30
     ],
     'cors' => [
-        'enabled' => env('FLIGHTDECK_CORS_ENABLED', true)
+        'enabled' => true
     ],
     'jwt' => [
 
