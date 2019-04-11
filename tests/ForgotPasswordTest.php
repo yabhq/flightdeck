@@ -37,6 +37,10 @@ class ForgotPasswordTest extends TestCase
 
         $response->assertOk();
 
+        $this->assertDatabaseHas('password_resets', [
+            'email' => $user->email,
+        ]);
+
         Notification::assertSentTo($user, ResetPassword::class);
     }
 }
