@@ -2,10 +2,13 @@
 
 return [
     'auth' => [
-        'enabled' => true,
+        'enabled' => true
     ],
     'tokens' => [
         'expire_days' => 30
+    ],
+    'cors' => [
+        'enabled' => true
     ],
     'jwt' => [
 

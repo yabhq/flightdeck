@@ -3,7 +3,7 @@
 /**
  * Getting ready for takeoff...
  */
-Route::group(['middleware' => ['api'], 'namespace' => 'Yab\FlightDeck\Http\Controllers'], function () {
+Route::group(['middleware' => ['api', 'cors'], 'namespace' => 'Yab\FlightDeck\Http\Controllers'], function () {
 
     /**
      * JWT token routes
