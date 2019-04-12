@@ -13,13 +13,17 @@ class Authorization
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if (FlightDeck::checkToken($request->token)) {
-            return $next($request);
+        if (config('flightdeck.authorization.enabled')) {
+            if (FlightDeck::checkToken($request->header(config('flightdeck.authorization.header')))) {
+                return $next($request);
+            }
+            throw new AuthorizationException('You have provided an invalid api token.');
         }
-        throw new AuthorizationException('You have provided an invalid api token.');
+        return $next($request);
     }
 }

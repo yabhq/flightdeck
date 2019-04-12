@@ -17,7 +17,9 @@ class AuthorizationTest extends TestCase
                     ]);
         })->middleware('flightdeck');
 
-        $response = $this->json('GET', '/authorization-test', [
+        $response = $this->withHeaders([
+            'X-Authorization' => $token,
+        ])->json('GET', '/authorization-test', [
             'token' => $token,
         ]);
         $response->assertSuccessful();
@@ -44,7 +46,9 @@ class AuthorizationTest extends TestCase
     {
         $token = FlightDeck::generate('app2', now()->subDays(2)->toDateTimeString());
         Route::get('authorization-test', function () {
-            return response()->json([
+            return response()->withHeaders([
+                'X-Authorization' => $token,
+            ])->json([
                 'data' => 'this was a success',
             ]);
         })->middleware('flightdeck');

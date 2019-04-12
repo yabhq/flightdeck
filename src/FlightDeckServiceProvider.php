@@ -21,7 +21,7 @@ class FlightDeckServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'flightdeck');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         
-        if (config('flightdeck.auth.enabled')) {
+        if (config('flightdeck.authentication.enabled')) {
             $this->loadRoutesFrom(__DIR__ . '/routes/auth.php');
         }
 
