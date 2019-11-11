@@ -2,6 +2,7 @@
 
 namespace Yab\FlightDeck\Tests;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Response;
 use Yab\FlightDeck\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,7 @@ class ResetPasswordTest extends TestCase
     public function a_password_must_be_confirmed()
     {
         $response = $this->post(route('password.reset'), [
-            'token' => str_random(32),
+            'token' => Str::random(32),
             'email' => 'johnsnow@yabhq.com',
             'password' => 'supersecret',
             'password_confirmation' => 'notsupersecret',
