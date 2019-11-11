@@ -78,7 +78,7 @@ class ForgotPasswordController extends Controller
     {
         return new JsonResponse([
             'success' => false,
-            'message' => 'An error occurred while trying to send the password reset link',
-        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            'message' => 'The email address provided could not be found',
+        ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }
