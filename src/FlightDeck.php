@@ -2,6 +2,7 @@
 
 namespace Yab\FlightDeck;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
 class FlightDeck
@@ -16,7 +17,7 @@ class FlightDeck
      */
     public static function generate(string $name, string $expires_at = null, int $length = 60) : string
     {
-        $token = str_random($length);
+        $token = Str::random($length);
         DB::table('api_tokens')->insert([
             'name' => $name,
             'token' => $token,
