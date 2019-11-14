@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "illuminate/support": "6.0.*",
+        "illuminate/support": "^6.0",
         "tymon/jwt-auth": "1.0.*"
     },
     "require-dev": {
