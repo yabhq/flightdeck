@@ -45,7 +45,7 @@ return [
     */
     'cors' => [
         'enabled' => env('CORS_ENABLED', true),
-        'origin' => env('CORS_DOMAIN', '*'),
+        'origin' => env('CORS_ORIGIN', '*'),
         'methods' => 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
     ],
 ];
