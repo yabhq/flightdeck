@@ -26,13 +26,44 @@ List all available API keys
 php artisan flightdeck:list
 ```
 
-### Testing
+## Multi-Auth
+
+FlightDeck makes authenticating users with multiple guards a breeze.
+
+Suppose you wish to add support for login, logout and token refreshing for a hypothetical "customer" user type.
+
+Simply extend the `FlightAuthController` class as follows:
+
+```php
+<?php
+
+namespace App\Http\Controllers\Customer;
+
+use Yab\FlightDeck\Http\Controllers\AuthController as FlightAuthController;
+
+class AuthController extends FlightAuthController
+{
+    /**
+     * Get the guard to be used for login, logout and token refreshes.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return auth()->guard('customer');
+    }
+}
+```
+
+You can also extend `FlightDeckForgotPasswordController` and `FlightDeckResetPasswordController` in a similar way.
+
+## Testing
 
 ``` bash
 composer test
 ```
 
-### Changelog
+## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
@@ -40,7 +71,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-### Security
+## Security
 
 If you discover any security related issues, please email us instead of using the issue tracker.
 
