@@ -38,11 +38,14 @@ return [
     | Cross-Origin Resource Sharing (CORS)
     |--------------------------------------------------------------------------
     |
-    | If you consume your API from a different domain, you will need to
-    | enable CORS to be able to access it
+    | If you consume your API from a different domain, you will need to enable
+    | CORS to be able to access it. By default the origin is set to '*' to
+    | allow all domains or you can specify a single domain to allow
     |
     */
     'cors' => [
-        'enabled' => true,
+        'enabled' => env('CORS_ENABLED', true),
+        'origin' => env('CORS_DOMAIN', '*'),
+        'methods' => 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
     ],
 ];

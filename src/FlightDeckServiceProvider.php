@@ -25,8 +25,13 @@ class FlightDeckServiceProvider extends ServiceProvider
             $this->loadRoutesFrom(__DIR__ . '/routes/auth.php');
         }
 
-        $this->app['router']->aliasMiddleware('flightdeck', Authorization::class);
-        $this->app['router']->aliasMiddleware('cors', Cors::class);
+        if (config('flightdeck.authorization.enabled')) {
+            $this->app['router']->aliasMiddleware('flightdeck', Authorization::class);
+        }
+        
+        if (config('flightdeck.cors.enabled')) {
+            $this->app['router']->aliasMiddleware('cors', Cors::class);
+        }
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
