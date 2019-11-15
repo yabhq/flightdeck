@@ -32,7 +32,7 @@ FlightDeck makes authenticating users with multiple guards a breeze.
 
 Suppose you wish to add support for login, logout and token refreshing for a hypothetical "customer" user type.
 
-Simply extend the `FlightAuthController` class as follows:
+Simply extend the FlightDeck `AuthController` class as follows:
 
 ```php
 <?php
