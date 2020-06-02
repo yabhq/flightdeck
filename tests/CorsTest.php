@@ -5,8 +5,8 @@ namespace Yab\FlightDeck\Tests;
 use Illuminate\Http\Response;
 use Yab\FlightDeck\Models\User;
 use Yab\FlightDeck\Tests\TestCase;
+use Illuminate\Testing\TestResponse;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Testing\TestResponse;
 
 class CorsTest extends TestCase
 {

@@ -2,11 +2,15 @@
 
 namespace Yab\FlightDeck\Http\Controllers;
 
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Auth\Events\PasswordReset;
 use Yab\FlightDeck\Http\Requests\ResetPasswordRequest;
 
 class ResetPasswordController extends Controller
@@ -21,8 +25,6 @@ class ResetPasswordController extends Controller
     | explore this trait and override any methods you wish to tweak.
     |
     */
-
-    use ResetsPasswords;
 
     /**
      * Create a new controller instance.
@@ -43,7 +45,8 @@ class ResetPasswordController extends Controller
     public function reset(ResetPasswordRequest $request)
     {
         $response = $this->broker()->reset(
-            $this->credentials($request), function ($user, $password) {
+            $this->credentials($request),
+            function ($user, $password) {
                 $this->resetPassword($user, $password);
             }
         );
@@ -81,5 +84,73 @@ class ResetPasswordController extends Controller
             'success' => false,
             'message' => 'An error occurred while trying to reset the password',
         ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * Get the password reset credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        return $request->only(
+            'email',
+            'password',
+            'password_confirmation',
+            'token'
+        );
+    }
+
+    /**
+     * Set the user's password.
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
+     * @param  string  $password
+     * @return void
+     */
+    protected function setUserPassword($user, $password)
+    {
+        $user->password = Hash::make($password);
+    }
+
+    /**
+     * Reset the given user's password.
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
+     * @param  string  $password
+     * @return void
+     */
+    protected function resetPassword($user, $password)
+    {
+        $this->setUserPassword($user, $password);
+
+        $user->setRememberToken(Str::random(60));
+
+        $user->save();
+
+        event(new PasswordReset($user));
+
+        $this->guard()->login($user);
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    public function broker()
+    {
+        return Password::broker();
+    }
+
+    /**
+     * Get the guard to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard();
     }
 }

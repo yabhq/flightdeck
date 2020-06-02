@@ -8,7 +8,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Password;
 use Yab\FlightDeck\Http\Requests\ForgotPasswordRequest;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
 {
@@ -22,8 +21,6 @@ class ForgotPasswordController extends Controller
     | your application to your users. Feel free to explore this trait.
     |
     */
-
-    use SendsPasswordResetEmails;
 
     /**
      * Create a new controller instance.
@@ -80,5 +77,15 @@ class ForgotPasswordController extends Controller
             'success' => false,
             'message' => 'The email address provided could not be found',
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    public function broker()
+    {
+        return Password::broker();
     }
 }
