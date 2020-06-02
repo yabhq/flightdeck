@@ -5,7 +5,6 @@ namespace Yab\FlightDeck\Tests;
 use Illuminate\Support\Str;
 use Illuminate\Http\Response;
 use Yab\FlightDeck\Models\User;
-use Illuminate\Support\Facades\DB;
 use Yab\FlightDeck\Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
@@ -68,4 +67,3 @@ class ResetPasswordTest extends TestCase
         $this->assertTrue(Hash::check('supersecret', $user->password));
     }
 }
-
