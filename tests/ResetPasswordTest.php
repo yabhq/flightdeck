@@ -7,10 +7,17 @@ use Illuminate\Http\Response;
 use Yab\FlightDeck\Models\User;
 use Yab\FlightDeck\Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Password;
 
 class ResetPasswordTest extends TestCase
 {
+    protected function getEnvironmentSetUp($app)
+    {
+        $app['config']->set('auth.passwords.users.table', 'password_resets');
+        parent::getEnvironmentSetUp($app);
+    }
+
     /** @test */
     public function an_email_password_and_token_are_required()
     {
