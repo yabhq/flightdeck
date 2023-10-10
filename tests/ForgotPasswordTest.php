@@ -5,11 +5,18 @@ namespace Yab\FlightDeck\Tests;
 use Illuminate\Http\Response;
 use Yab\FlightDeck\Models\User;
 use Yab\FlightDeck\Tests\TestCase;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Auth\Notifications\ResetPassword;
 
 class ForgotPasswordTest extends TestCase
 {
+    protected function getEnvironmentSetUp($app)
+    {
+        $app['config']->set('auth.passwords.users.table', 'password_resets');
+        parent::getEnvironmentSetUp($app);
+    }
+
     /** @test */
     public function an_email_is_required_to_send_password_reset_email()
     {
@@ -44,4 +51,3 @@ class ForgotPasswordTest extends TestCase
         Notification::assertSentTo($user, ResetPassword::class);
     }
 }
-
