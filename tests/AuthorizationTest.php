@@ -4,10 +4,11 @@ namespace Yab\FlightDeck\Tests;
 
 use Yab\FlightDeck\FlightDeck;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Framework\Attributes\Test;
 
 class AuthorizationTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function valid_authorization_token_allows_request()
     {
         $token = FlightDeck::generate('app1');
@@ -27,8 +28,8 @@ class AuthorizationTest extends TestCase
             'data' => 'this was a success',
         ]);
     }
-    
-    /** @test */
+
+    #[Test]
     public function authorization_token_must_be_provided_on_routes()
     {
         Route::get('authorization-test', function () {
@@ -41,7 +42,7 @@ class AuthorizationTest extends TestCase
         $response->assertForbidden();
     }
 
-    /** @test */
+    #[Test]
     public function expired_token_is_unauthorized()
     {
         $token = FlightDeck::generate('app2', now()->subDays(2)->toDateTimeString());

@@ -5,10 +5,11 @@ namespace Yab\FlightDeck\Tests;
 use Illuminate\Http\Response;
 use Yab\FlightDeck\Models\User;
 use Yab\FlightDeck\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class AuthenticationTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function user_email_and_password_are_required_to_authenticate()
     {
         $response = $this->post(route('login'));
@@ -23,11 +24,11 @@ class AuthenticationTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function user_cannot_authenticate_with_invalid_credentials()
     {
         $user = factory(User::class)->create(['password' => bcrypt('testing123')]);
-        
+
         $response = $this->post(route('login'), [
             'email' => $user->email,
             'password' => 'testing456',
@@ -38,7 +39,7 @@ class AuthenticationTest extends TestCase
         $this->assertFalse(auth()->check());
     }
 
-    /** @test */
+    #[Test]
     public function user_can_authenticate_with_valid_credentials()
     {
         $user = factory(User::class)->create(['password' => bcrypt('testing123')]);
@@ -53,7 +54,7 @@ class AuthenticationTest extends TestCase
         $this->assertEquals($user->email, auth()->user()->email);
     }
 
-    /** @test */
+    #[Test]
     public function an_authenticated_user_can_logout()
     {
         $user = factory(User::class)->create();
@@ -65,4 +66,3 @@ class AuthenticationTest extends TestCase
         $this->assertFalse(auth()->check());
     }
 }
-

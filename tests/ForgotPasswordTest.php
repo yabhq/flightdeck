@@ -6,6 +6,7 @@ use Illuminate\Http\Response;
 use Yab\FlightDeck\Models\User;
 use Yab\FlightDeck\Tests\TestCase;
 use Illuminate\Support\Facades\Config;
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Auth\Notifications\ResetPassword;
 
@@ -17,7 +18,7 @@ class ForgotPasswordTest extends TestCase
         parent::getEnvironmentSetUp($app);
     }
 
-    /** @test */
+    #[Test]
     public function an_email_is_required_to_send_password_reset_email()
     {
         $response = $this->post(route('password.email'));
@@ -31,7 +32,27 @@ class ForgotPasswordTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
+    public function entering_an_invalid_email_address_does_not_send_the_forgot_password_email()
+    {
+        Notification::fake();
+
+        $user = factory(User::class)->create();
+
+        $response = $this->post(route('password.email'), [
+            'email' => 'wrong@yabhq.com',
+        ]);
+
+        $response->assertUnprocessable();
+
+        $this->assertDatabaseMissing('password_resets', [
+            'email' => $user->email,
+        ]);
+
+        Notification::assertNothingSentTo($user);
+    }
+
+    #[Test]
     public function entering_a_valid_email_address_sends_the_forgot_password_email()
     {
         Notification::fake();

@@ -7,10 +7,11 @@ use Yab\FlightDeck\Models\User;
 use Yab\FlightDeck\Tests\TestCase;
 use Illuminate\Testing\TestResponse;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Framework\Attributes\Test;
 
 class CorsTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function cors_headers_are_set_for_login_route()
     {
         $response = $this->post(route('login'));
@@ -19,7 +20,7 @@ class CorsTest extends TestCase
         $this->assertCorsHeadersSet($response);
     }
 
-    /** @test */
+    #[Test]
     public function cors_headers_are_set_for_logout_route()
     {
         $response = $this->post(route('logout'));
@@ -28,7 +29,7 @@ class CorsTest extends TestCase
         $this->assertCorsHeadersSet($response);
     }
 
-    /** @test */
+    #[Test]
     public function cors_headers_are_set_for_me_route()
     {
         $user = factory(User::class)->create();
@@ -41,7 +42,7 @@ class CorsTest extends TestCase
         $this->assertCorsHeadersSet($response);
     }
 
-    /** @test */
+    #[Test]
     public function cors_origin_header_can_be_customized()
     {
         config(['flightdeck.cors.origin' => 'testdomain.org']);
@@ -49,7 +50,7 @@ class CorsTest extends TestCase
         $this->assertCorsHeadersSet($response, 'testdomain.org');
     }
 
-    /** @test */
+    #[Test]
     public function cors_methods_header_can_be_customized()
     {
         config(['flightdeck.cors.methods' => 'GET, POST, PUT, PATCH']);
