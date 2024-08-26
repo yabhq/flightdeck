@@ -8,6 +8,7 @@ use Yab\FlightDeck\Models\User;
 use Yab\FlightDeck\Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Config;
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Support\Facades\Password;
 
 class ResetPasswordTest extends TestCase
@@ -18,7 +19,7 @@ class ResetPasswordTest extends TestCase
         parent::getEnvironmentSetUp($app);
     }
 
-    /** @test */
+    #[Test]
     public function an_email_password_and_token_are_required()
     {
         $response = $this->post(route('password.reset'));
@@ -34,7 +35,7 @@ class ResetPasswordTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function a_password_must_be_confirmed()
     {
         $response = $this->post(route('password.reset'), [
@@ -53,7 +54,30 @@ class ResetPasswordTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
+    public function password_cannot_be_reset_with_an_invalid_token()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->post(route('password.reset'), [
+            'token' => 'badtoken',
+            'email' => $user->email,
+            'password' => 'supersecret',
+            'password_confirmation' => 'supersecret',
+        ]);
+
+        $response->assertUnauthorized();
+
+        $response->assertJson([
+            'message' => 'An error occurred while trying to reset the password',
+        ]);
+
+        $user = $user->fresh();
+
+        $this->assertFalse(Hash::check('supersecret', $user->password));
+    }
+
+    #[Test]
     public function providing_valid_information_results_in_successful_password_reset()
     {
         $user = factory(User::class)->create();

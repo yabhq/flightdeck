@@ -83,7 +83,7 @@ class ResetPasswordController extends Controller
         return new JsonResponse([
             'success' => false,
             'message' => 'An error occurred while trying to reset the password',
-        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        ], Response::HTTP_UNAUTHORIZED);
     }
 
     /**
